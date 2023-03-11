@@ -22,14 +22,14 @@ def test_retrieve_buoy_data_NoDataRetrieved_returned(
     monkeypatch.setattr("pandas.read_csv", empty_df)
 
     with pytest.raises(NoDataRetrieved):
-        retrieve_buoy_data("")
+        retrieve_buoy_data()
 
 
 def test_format_raw_data_formatted_data_returned() -> None:
     """Tests that the function returns the expected formatted data
     and drops the obsolete fields."""
 
-    test_data = {
+    test_data: dict = {
         "LAT": ["123"],
         "LON": ["456"],
         "YYYY": ["2023"],
