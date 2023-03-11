@@ -1,5 +1,3 @@
-import pytest
-
 from buoy_analytics.utils.buoy_model import BuoyModel, to_BuoyModel
 
 
