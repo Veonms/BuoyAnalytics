@@ -2,7 +2,7 @@ from buoy_analytics.utils.buoy_model import BuoyModel, to_BuoyModel
 
 
 def test_to_BuoyModel_None_fields() -> None:
-
+    """Tests case where all possible fields have None values."""
     test_buoy_dict = [
         {
             "#STN": "13009",
