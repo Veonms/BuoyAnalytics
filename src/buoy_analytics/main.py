@@ -1,6 +1,7 @@
 import logging
 
 from buoy_analytics.config import RAW_BUOY_DATA_URL
+from buoy_analytics.utils.buoy_model import to_BuoyModel
 from buoy_analytics.utils.exceptions import NoDataRetrieved
 from buoy_analytics.utils.ndbc_data import retrieve_buoy_data
 
@@ -15,7 +16,10 @@ def main():
         exit()
 
     logging.info("Active buoys retrieved")
-    print(raw_buoys)
+
+    buoys = to_BuoyModel(raw_buoys)
+
+    logging.info("Transformed data")
 
 
 if __name__ == "__main__":
