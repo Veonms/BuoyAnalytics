@@ -31,7 +31,7 @@ def retry(
                     return func(*args, **kwargs)
                 except ExceptionToCheck as err:
                     logging.warning(f"{err}. Retrying in {mdelay} seconds.")
-                    time.sleep(secs=mdelay)
+                    time.sleep(mdelay)
                     mtries -= 1
                     mdelay *= backoff
             return func(*args, **kwargs)
