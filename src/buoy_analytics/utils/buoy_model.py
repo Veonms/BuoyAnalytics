@@ -20,6 +20,9 @@ class BuoyModel(BaseModel):
     pressure_tendency: float | None = ...
     water_level: float | None = ...
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
 
 def to_BuoyModel(active_buoys: list[dict]) -> list[BuoyModel]:
     """Transforms data to BuoyModel object.

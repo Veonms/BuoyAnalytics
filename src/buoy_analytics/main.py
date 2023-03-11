@@ -16,6 +16,8 @@ def main():
 
     logging.info("Active buoys retrieved")
 
+    logging.info(raw_buoys[0])
+
     buoys = to_BuoyModel(raw_buoys)
 
     logging.info("Transformed data")
