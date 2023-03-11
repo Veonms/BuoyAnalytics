@@ -1,10 +1,11 @@
 import pandas as pd
 
+from buoy_analytics.config import RAW_BUOY_DATA_URL
 from buoy_analytics.utils.exceptions import NoDataRetrieved, retry
 
 
 @retry(ExceptionToCheck=NoDataRetrieved)
-def retrieve_buoy_data(url: str) -> list[dict]:
+def retrieve_buoy_data() -> list[dict]:
     """Retrives raw buoy data from the NDBC.
 
     Raises:
@@ -15,7 +16,7 @@ def retrieve_buoy_data(url: str) -> list[dict]:
     """
 
     df_active_buoys: pd.DataFrame = pd.read_csv(
-        url,
+        RAW_BUOY_DATA_URL,
         delim_whitespace=True,
     ).iloc[1:]
 
