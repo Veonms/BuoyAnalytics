@@ -22,7 +22,7 @@ def test_retrieve_buoy_data_NoDataRetrieved_returned(
     monkeypatch.setattr("pandas.read_csv", empty_df)
 
     with pytest.raises(NoDataRetrieved):
-        retrieve_buoy_data("")
+        retrieve_buoy_data()
 
 
 def test_format_raw_data_formatted_data_returned() -> None:
