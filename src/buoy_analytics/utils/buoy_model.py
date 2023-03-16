@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 
 class BuoyModel(BaseModel):
+    """Pydantic BaseModel object which validates the fields when the object is created"""
+
     station: str
     timestamp: str
     location: str

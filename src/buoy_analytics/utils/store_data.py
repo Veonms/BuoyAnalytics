@@ -1,11 +1,21 @@
-from datetime import MINYEAR, datetime
+from datetime import datetime
+
+from mysql import connector
 
 from buoy_analytics.config import DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER
 from buoy_analytics.utils.buoy_model import BuoyModel
-from mysql import connector
 
 
 def query_database(query: str):
+    """Takes in a query as a parameter and will execute the query against
+    the database defined in the config. Returns the result from the query.
+
+    Args:
+        query (str): Query to execute.
+
+    Returns:
+        _type_: Response from the query.
+    """
     with connector.connect(
         user=DB_USER,
         password=DB_PASSWORD,
@@ -21,11 +31,14 @@ def query_database(query: str):
         return res
 
 
-def check_table_exists(station_id: str):
-    """
-    Creates a new table for the station if a table doesn't already exist.
+def check_table_exists(station_id: str) -> None:
+    """Creates a new table for the station if a table doesn't already exist.
     Makes one request to db rather than two (check if it exists and creates the table if not).
+
+    Args:
+        station_id (str): Station ID for the specific buoy.
     """
+
     query = f"""
         CREATE TABLE IF NOT EXISTS `{station_id}` (
             station varchar(255),
@@ -52,6 +65,18 @@ def check_table_exists(station_id: str):
 
 
 def retrieve_timestamp(station_id: str) -> str:
+    """Takes in a station id and generates a query using the id. Uses the
+    query_database function to execute the query, where the result is retrieved.
+    If no data exists, then None will be returned by the query, where it will be
+    replaced by 2000-01-01 00:00:00 to allow comparisons.
+
+    Args:
+        station_id (str): Station ID for the specific buoy.
+
+    Returns:
+        str: Returns the max timestamp contained in the database. If no data is
+        contained in the database, 2000-01-01 00:00:00 is returned.
+    """
     query = f"SELECT MAX(timestamp) FROM `{station_id}`;"
     max_timestamp = query_database(query=query)[0][0]
 
@@ -60,7 +85,13 @@ def retrieve_timestamp(station_id: str) -> str:
     return max_timestamp
 
 
-def store_buoy(buoy: BuoyModel):
+def store_buoy(buoy: BuoyModel) -> None:
+    """Creates a new table for the station if a table doesn't already exist.
+    Makes one request to db rather than two (check if it exists and creates the table if not).
+
+    Args:
+        buoy (BuoyModel): Individual buoy.
+    """
     query = f"""
     INSERT INTO `{buoy.station}` (
         station, 
