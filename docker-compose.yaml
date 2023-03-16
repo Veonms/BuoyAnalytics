@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./database
+      dockerfile: Dockerfile.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"

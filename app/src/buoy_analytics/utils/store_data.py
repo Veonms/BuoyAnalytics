@@ -1,7 +1,8 @@
-from mysql import connector
+from datetime import MINYEAR, datetime
 
 from buoy_analytics.config import DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER
 from buoy_analytics.utils.buoy_model import BuoyModel
+from mysql import connector
 
 
 def query_database(query: str):
@@ -50,12 +51,12 @@ def check_table_exists(station_id: str):
     return
 
 
-def retrieve_timestamp(station_id: str):
+def retrieve_timestamp(station_id: str) -> str:
     query = f"SELECT MAX(timestamp) FROM `{station_id}`;"
     max_timestamp = query_database(query=query)[0][0]
 
     if max_timestamp is None:
-        return 0
+        return f"2000-01-01 00:00:00"
     return max_timestamp
 
 
@@ -109,5 +110,7 @@ def to_sql_db(buoy: BuoyModel):
     check_table_exists(buoy.station)
     max_db_timestamp = retrieve_timestamp(buoy.station)
 
-    if buoy.timestamp > max_db_timestamp:
+    if datetime.strptime(buoy.timestamp, r"%Y-%m-%d %H:%M:%S") > datetime.strptime(
+        max_db_timestamp, r"%Y-%m-%d %H:%M:%S"
+    ):
         store_buoy(buoy=buoy)
