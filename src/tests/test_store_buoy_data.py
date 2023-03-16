@@ -14,7 +14,7 @@ def test_retrieve_timestamp_None(monkeypatch: MonkeyPatch):
         return [[None], ["Other data"]]
 
     monkeypatch.setattr("buoy_analytics.utils.store_data.query_database", return_none)
-    assert retrieve_timestamp("") == 0
+    assert retrieve_timestamp("") == "2000-01-01 00:00:00"
 
 
 def test_retrieve_timestamp_Timestamp(monkeypatch: MonkeyPatch):
