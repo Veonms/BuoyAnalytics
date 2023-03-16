@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 
 class BuoyModel(BaseModel):
+    """Pydantic BaseModel object which validates the fields when the object is created"""
+
     station: str
     timestamp: str
     location: str
@@ -19,9 +21,6 @@ class BuoyModel(BaseModel):
     visability: float | None = ...
     pressure_tendency: float | None = ...
     water_level: float | None = ...
-
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
 
 
 def to_BuoyModel(active_buoys: list[dict]) -> list[BuoyModel]:

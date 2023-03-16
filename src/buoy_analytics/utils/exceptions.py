@@ -4,6 +4,8 @@ from functools import wraps
 
 
 class NoDataRetrieved(Exception):
+    """Exception raised when no data is returned. Inherits from Exception class."""
+
     pass
 
 
