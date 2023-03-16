@@ -47,4 +47,4 @@ def test_to_BuoyModel_None_fields() -> None:
         water_level=None,
     )
 
-    assert transformed_BuoyModel[0] == transformed_test_BuoyModel
+    assert transformed_BuoyModel[0].__dict__ == transformed_test_BuoyModel.__dict__
