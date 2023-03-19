@@ -24,6 +24,7 @@ def query_database(query: str):  # pragma: no cover
     Returns:
         _type_: Response from the query.
     """
+
     with connector.connect(
         user=DB_USER,
         password=DB_PASSWORD,
