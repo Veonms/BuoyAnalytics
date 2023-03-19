@@ -42,7 +42,7 @@ def test_to_BuoyModel_None_fields() -> None:
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )

@@ -6,13 +6,13 @@ from buoy_analytics.utils.exceptions import NoDataRetrieved, retry
 
 @retry(ExceptionToCheck=NoDataRetrieved)
 def retrieve_buoy_data() -> list[dict]:
-    """Retrives raw buoy data from the NDBC.
+    """Retrieves raw buoy data from the NDBC.
 
     Raises:
         NoDataRetrieved: Request failed to return data.
 
     Returns:
-        list[dict]: List of Dataframe columns with corresponing data.
+        list[dict]: List of Dataframe columns with corresponding data.
     """
 
     df_active_buoys: pd.DataFrame = pd.read_csv(

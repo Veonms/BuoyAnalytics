@@ -65,7 +65,7 @@ def check_table_exists(station_id: str) -> None:
             air_temp float(53),
             sea_surface_temp float(53),
             dewpoint_temp float(53),
-            visability float(53),
+            visibility float(53),
             pressure_tendency float(53),
             water_level float(53)
         );
@@ -133,7 +133,7 @@ def store_buoy(buoy: BuoyModel) -> None:
         air_temp, 
         sea_surface_temp, 
         dewpoint_temp, 
-        visability, 
+        visibility, 
         pressure_tendency, 
         water_level
     )
@@ -152,7 +152,7 @@ def store_buoy(buoy: BuoyModel) -> None:
         {'NULL' if buoy.air_temp is None else f"'{buoy.air_temp}'"},
         {'NULL' if buoy.sea_surface_temp is None else f"'{buoy.sea_surface_temp}'"},
         {'NULL' if buoy.dewpoint_temp is None else f"'{buoy.dewpoint_temp}'"},
-        {'NULL' if buoy.visability is None else f"'{buoy.visability}'"},
+        {'NULL' if buoy.visibility is None else f"'{buoy.visibility}'"},
         {'NULL' if buoy.pressure_tendency is None else f"'{buoy.pressure_tendency}'"},
         {'NULL' if buoy.water_level is None else f"'{buoy.water_level}'"}
     );

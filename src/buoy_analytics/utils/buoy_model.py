@@ -18,7 +18,7 @@ class BuoyModel(BaseModel):
     air_temp: float | None = ...
     sea_surface_temp: float | None = ...
     dewpoint_temp: float | None = ...
-    visability: float | None = ...
+    visibility: float | None = ...
     pressure_tendency: float | None = ...
     water_level: float | None = ...
 
@@ -26,7 +26,7 @@ class BuoyModel(BaseModel):
 def to_BuoyModel(active_buoys: list[dict]) -> list[BuoyModel]:
     """Transforms data to BuoyModel object.
     Args:
-        active_buoys (list[dict]): List of Dataframe columns with corresponing data.
+        active_buoys (list[dict]): List of Dataframe columns with corresponding data.
     Returns:
         list[BuoyModel]: List of individual buoys.
     """
@@ -47,7 +47,7 @@ def to_BuoyModel(active_buoys: list[dict]) -> list[BuoyModel]:
             air_temp=None if buoy["ATMP"] == "MM" else float(buoy["ATMP"]),
             sea_surface_temp=None if buoy["WTMP"] == "MM" else float(buoy["WTMP"]),
             dewpoint_temp=None if buoy["DEWP"] == "MM" else float(buoy["DEWP"]),
-            visability=None if buoy["VIS"] == "MM" else float(buoy["VIS"]),
+            visibility=None if buoy["VIS"] == "MM" else float(buoy["VIS"]),
             pressure_tendency=None if buoy["PTDY"] == "MM" else float(buoy["PTDY"]),
             water_level=None if buoy["TIDE"] == "MM" else float(buoy["TIDE"]),
         )
