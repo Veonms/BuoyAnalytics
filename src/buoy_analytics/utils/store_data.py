@@ -41,7 +41,8 @@ def query_database(query: str):  # pragma: no cover
 
 def check_table_exists(station_id: str) -> None:
     """Creates a new table for the station if a table doesn't already exist.
-    Makes one request to db rather than two (check if it exists and creates the table if not).
+    Makes one request to db rather than two (check if it exists and
+    creates the table if not).
 
     Args:
         station_id (str): Station ID for the specific buoy.
@@ -107,7 +108,8 @@ def retrieve_timestamp(station_id: str) -> str:
 
 def store_buoy(buoy: BuoyModel) -> None:
     """Creates a new table for the station if a table doesn't already exist.
-    Makes one request to db rather than two (check if it exists and creates the table if not).
+    Makes one request to db rather than two (check if it exists and
+    creates the table if not).
 
     Args:
         buoy (BuoyModel): Individual buoy.
