@@ -14,7 +14,7 @@ from buoy_analytics.utils.exceptions import (
 
 
 @retry(ExceptionToCheck=DatabaseError)
-def query_database(query: str):
+def query_database(query: str):  # pragma: no cover
     """Takes in a query as a parameter and will execute the query against
     the database defined in the config. Returns the result from the query.
 
