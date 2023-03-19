@@ -93,6 +93,7 @@ def retrieve_timestamp(station_id: str) -> str:
         str: Returns the max timestamp contained in the database. If no data is
         contained in the database, 2000-01-01 00:00:00 is returned.
     """
+
     query = f"SELECT MAX(timestamp) FROM `{station_id}`;"
 
     try:
@@ -115,6 +116,7 @@ def store_buoy(buoy: BuoyModel) -> None:
     Args:
         buoy (BuoyModel): Individual buoy.
     """
+
     query = f"""
     INSERT INTO `{buoy.station}` (
         station, 
@@ -167,6 +169,16 @@ def store_buoy(buoy: BuoyModel) -> None:
 
 
 def to_sql_db(buoy: BuoyModel):
+    """Function to handle writing data to an SQL database.
+
+    Args:
+        buoy (BuoyModel): An individual buoy.
+
+    Raises:
+        SQLQueryExecutionFailed: _description_
+        NoDataRetrieved: _description_
+        SQLQueryExecutionFailed: _description_
+    """
 
     try:
         check_table_exists(buoy.station)
