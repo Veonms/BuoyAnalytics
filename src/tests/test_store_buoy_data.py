@@ -107,7 +107,7 @@ def test_store_buoy_returns_none(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -140,7 +140,7 @@ def test_store_buoy_raises_DatabaseError(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -186,7 +186,7 @@ def test_to_sql_db_returns_none(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -226,7 +226,7 @@ def test_to_sql_db_timestamp_not_new(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -260,7 +260,7 @@ def test_to_sql_db_table_check_raises_DatabaseError(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -302,7 +302,7 @@ def test_to_sql_db_retrieve_timestamp_raises_DatabaseError(monkeypatch: MonkeyPa
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
@@ -351,7 +351,7 @@ def test_to_sql_db_store_buoy_raises_DatabaseError(monkeypatch: MonkeyPatch):
         air_temp=None,
         sea_surface_temp=None,
         dewpoint_temp=None,
-        visability=None,
+        visibility=None,
         pressure_tendency=None,
         water_level=None,
     )
