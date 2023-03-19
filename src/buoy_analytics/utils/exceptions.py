@@ -9,6 +9,12 @@ class NoDataRetrieved(Exception):
     pass
 
 
+class SQLQueryExecutionFailed(Exception):
+    """Exception raised when a SQL query could not be executed. Inherits from Exception class."""
+
+    pass
+
+
 def retry(
     ExceptionToCheck: Exception,
     tries: int = 3,

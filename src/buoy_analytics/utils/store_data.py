@@ -1,11 +1,19 @@
+import logging
 from datetime import datetime
 
 from mysql import connector
+from mysql.connector.errors import DatabaseError
 
 from buoy_analytics.config import DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER
 from buoy_analytics.utils.buoy_model import BuoyModel
+from buoy_analytics.utils.exceptions import (
+    NoDataRetrieved,
+    SQLQueryExecutionFailed,
+    retry,
+)
 
 
+@retry(ExceptionToCheck=DatabaseError)
 def query_database(query: str):
     """Takes in a query as a parameter and will execute the query against
     the database defined in the config. Returns the result from the query.
@@ -60,7 +68,13 @@ def check_table_exists(station_id: str) -> None:
             water_level float(53)
         );
         """
-    query_database(query=query)
+    try:
+        query_database(query=query)
+
+    except DatabaseError as err:
+        logging.error(f"Could not check if table exists for station {station_id}.")
+        raise err
+
     return
 
 
@@ -78,7 +92,13 @@ def retrieve_timestamp(station_id: str) -> str:
         contained in the database, 2000-01-01 00:00:00 is returned.
     """
     query = f"SELECT MAX(timestamp) FROM `{station_id}`;"
-    max_timestamp = query_database(query=query)[0][0]
+
+    try:
+        max_timestamp = query_database(query=query)[0][0]
+
+    except DatabaseError as err:
+        logging.error(f"Could not get timestamp for station {station_id}.")
+        raise err
 
     if max_timestamp is None:
         return f"2000-01-01 00:00:00"
@@ -133,15 +153,41 @@ def store_buoy(buoy: BuoyModel) -> None:
     );
     """
 
-    query_database(query=query)
+    try:
+        query_database(query=query)
+
+    except DatabaseError as err:
+        logging.error(f"Could not buoy data for station {buoy.station}.")
+        raise err
+
     return
 
 
 def to_sql_db(buoy: BuoyModel):
-    check_table_exists(buoy.station)
-    max_db_timestamp = retrieve_timestamp(buoy.station)
 
-    if datetime.strptime(buoy.timestamp, r"%Y-%m-%d %H:%M:%S") > datetime.strptime(
+    try:
+        check_table_exists(buoy.station)
+    except DatabaseError as err:
+        logging.error(err)
+        raise SQLQueryExecutionFailed("SQL query could not be executed.")
+
+    try:
+        max_db_timestamp = retrieve_timestamp(buoy.station)
+    except DatabaseError as err:
+        logging.error(err)
+        raise NoDataRetrieved(
+            f"Timestamp could not be retrieved for station {buoy.station}."
+        )
+
+    if not datetime.strptime(buoy.timestamp, r"%Y-%m-%d %H:%M:%S") > datetime.strptime(
         max_db_timestamp, r"%Y-%m-%d %H:%M:%S"
     ):
+        return
+
+    try:
         store_buoy(buoy=buoy)
+    except DatabaseError as err:
+        logging.error(err)
+        raise SQLQueryExecutionFailed("SQL query could not be executed.")
+
+    return

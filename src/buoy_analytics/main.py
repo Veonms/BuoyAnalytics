@@ -1,5 +1,7 @@
 import logging
 
+from mysql.connector.errors import DatabaseError
+
 from buoy_analytics.utils.buoy_model import to_BuoyModel
 from buoy_analytics.utils.exceptions import NoDataRetrieved
 from buoy_analytics.utils.ndbc_data import retrieve_buoy_data
@@ -24,8 +26,11 @@ def main():
     logging.info("Transformed data")
 
     for buoy in buoys:
-        to_sql_db(buoy=buoy)
-        break
+        try:
+            to_sql_db(buoy=buoy)
+            break
+        except DatabaseError:
+            break
 
 
 if __name__ == "__main__":
